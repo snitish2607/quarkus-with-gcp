@@ -1,0 +1,14 @@
+[
+  {
+    "origin": [
+      "https://randomdomain.store",
+      "http://localhost:8080"
+    ],
+    "method": [
+      "GET"
+    ],
+    "responseHeader": [
+      "Content-Type"
+    ]
+  }
+]
