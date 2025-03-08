@@ -27,6 +27,7 @@ import java.util.UUID
 import org.jboss.resteasy.reactive.multipart.FileUpload;
 import org.nirp.client.TodoClient
 import org.nirp.util.CloudStorageUtil
+import org.nirp.util.PubSubUtil
 import java.nio.file.StandardCopyOption
 import kotlin.random.Random
 
@@ -43,6 +44,9 @@ class TodoController {
 
     @Inject
     lateinit var cloudStorageUtil: CloudStorageUtil
+
+    @Inject
+    lateinit var pubSubUtil: PubSubUtil
 
     @ConfigProperty(name = "application.quarkus-with-gcp.google-cloud-storage.bucket-name")
     lateinit var bucketName: String
@@ -88,6 +92,12 @@ class TodoController {
         existingTodo.description = todoRequest.description
 
         todoService.updateTodo(existingTodo)
+
+        if(existingTodo.description.contains("important")) {
+            pubSubUtil.publishMessage("first-topic", "Todo updated", mapOf("feature" to "important"))
+        } else {
+            pubSubUtil.publishMessage("first-topic", "Todo updated", mapOf("feature" to "normal"))
+        }
 
         return Response.ok(existingTodo).build()
     }
