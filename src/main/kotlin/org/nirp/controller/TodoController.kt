@@ -26,6 +26,7 @@ import java.nio.file.Paths
 import java.util.UUID
 import org.jboss.resteasy.reactive.multipart.FileUpload;
 import org.nirp.client.TodoClient
+import org.nirp.client.UploadClient
 import org.nirp.util.CloudStorageUtil
 import org.nirp.util.PubSubUtil
 import java.nio.file.StandardCopyOption
@@ -41,6 +42,10 @@ class TodoController {
     @Inject
     @RestClient
     lateinit var todoClient: TodoClient
+
+    @Inject
+    @RestClient
+    lateinit var uploadClient: UploadClient
 
     @Inject
     lateinit var cloudStorageUtil: CloudStorageUtil
@@ -126,20 +131,29 @@ class TodoController {
 //        val uploadDir = Paths.get(System.getProperty("java.io.tmpdir"), "uploads")
 //        Files.createDirectories(uploadDir)
 
-        val fileName = UUID.randomUUID().toString() + ".jpg"
+        val fileName = UUID.randomUUID().toString() + ".webp"
         //val filePath = uploadDir.resolve(fileName)
 
 //        file.uploadedFile().toFile().inputStream().use {
 //            Files.copy(it, filePath, StandardCopyOption.REPLACE_EXISTING)
 //        }
 
-        file.uploadedFile().toFile().inputStream().use {
-            cloudStorageUtil.upload(
-                bucketName,
-                "uploads/",
-                fileName,
-                it.readBytes()
-            )
+//        file.uploadedFile().toFile().inputStream().use {
+//            cloudStorageUtil.upload(
+//                bucketName,
+//                "uploads/",
+//                fileName,
+//                it.readBytes()
+//            )
+//        }
+
+        val response = uploadClient.uploadImage(
+            file.uploadedFile().toFile(),
+            fileName
+        )
+
+        if(response.url.isNullOrEmpty()) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Conversion failed").build()
         }
 
         val imageUrl = "uploads/$fileName"
@@ -167,7 +181,7 @@ class TodoController {
         )
 
         return Response.ok(fileBytes)
-            .type("image/jpeg")
+            .type("image/webp")
             .header("Content-Disposition", "attachment; filename=${todo.imageUrl!!.split("/").last()}")
             .build()
     }
