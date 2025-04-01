@@ -1,18 +1,34 @@
-# quarkus-with-gcp
+![Quarkus + GCP Overview](assets/course_banner.png)
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+# Quarkus + Kotlin on Google Cloud
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+This is the Git repository for the course **Quarkus + Kotlin on Google Cloud**, hosted on [Swinnovate Courses](https://courses.swinnovate.com/).
+
+To register for the **Quarkus + Kotlin on Google Cloud** course, **[click here](https://courses.swinnovate.com/enroll/quarkus-with-gcp)**. Also, explore other exciting courses at Swinnovate Courses.
+
+The course is structured into multiple sections, covering key concepts step by step. Below is an outline of the sections:
+
+| Serial Number | Section Name                                                      | Link                                                                        |
+|---------------|-------------------------------------------------------------------|-----------------------------------------------------------------------------|
+| 1             | Building a Todo Application with Quarkus                          | [Section 2](https://github.com/snitish2607/quarkus-with-gcp/tree/section-2) |
+| 2             | Setting Up a Google Cloud Project and Integration with Quarkus    | [Section 3](https://github.com/snitish2607/quarkus-with-gcp/tree/section-3) |
+| 3             | Google Cloud Logging for Quarkus                                  | [Section 4](https://github.com/snitish2607/quarkus-with-gcp/tree/section-4) |
+| 4             | Integrating Google Cloud Storage with Quarkus                     | [Section 5](https://github.com/snitish2607/quarkus-with-gcp/tree/section-5) |
+| 5             | Messaging with Google Cloud Pub/Sub in Quarkus                    | [Section 6](https://github.com/snitish2607/quarkus-with-gcp/tree/section-6) |
+| 6             | Pushing Quarkus Artifacts to Google Artifact Registry             | [Section 7](https://github.com/snitish2607/quarkus-with-gcp/tree/section-7) |
+| 7             | Deploying a Quarkus Application to Google Kubernetes Engine (GKE) | [Section 8](https://github.com/snitish2607/quarkus-with-gcp/tree/section-8) |
+| 8             | Integrating Google Secret Manager with GKE and Quarkus            | [Section 9](https://github.com/snitish2607/quarkus-with-gcp/tree/section-9) |
+
+---
+
 
 ## Running the application in dev mode
 
 You can run your application in dev mode that enables live coding using:
 
 ```shell script
-./mvnw quarkus:dev
+./mvnw compile quarkus:dev
 ```
-
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
 
 ## Packaging and running the application
 
@@ -23,46 +39,10 @@ The application can be packaged using:
 ```
 
 It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
 
 The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
 
-If you want to build an _über-jar_, execute the following command:
+---
 
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
-```
+<sub><sup>Logos and trademarks used in the course banner are the property of their respective owners.</sup></sub>
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
-
-## Creating a native executable
-
-You can create a native executable using:
-
-```shell script
-./mvnw package -Dnative
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
-
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./target/quarkus-with-gcp-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
-
-## Related Guides
-
-- REST ([guide](https://quarkus.io/guides/rest)): A Jakarta REST implementation utilizing build time processing and Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it.
-- REST Jackson ([guide](https://quarkus.io/guides/rest#json-serialisation)): Jackson serialization support for Quarkus REST. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it
-- Kotlin ([guide](https://quarkus.io/guides/kotlin)): Write your services in Kotlin
-
-## Provided Code
-
-### REST
-
-Easily start your REST Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
